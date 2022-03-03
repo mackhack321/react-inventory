@@ -9,32 +9,32 @@ Necessary database columns:
     - Last updated date (the last time any column was changed)
 
 Flask API endpoints:
-    - /create:
+    - /create POST:
         Description: create a new item in the database
         Request: entries for each database column
         Response: OK or error
 
-    - /deploy:
+    - /deploy POST:
         Description: update the deployment of an existing item
         Request: item ID, new deployment status
         Response: OK or error
 
-    - /getall:
+    - /getall GET:
         Description: get entire database of items
         Request: none
         Response: entire database in .map-friendly JSON form
 
-    - /remove:
+    - /remove POST:
         Description: remove item from database
         Request: item ID
         Response: OK or error
 
-    - /update:
+    - /update POST:
         Description: edits an item
         Request: item ID, new entry data
         Response: OK or error
 
-    - /search (maybe, would be really cool):
+    - /search GET (maybe, would be really cool):
         Description: searches for databse entries based off of a search term
         Request: search term
         Response: items that match (SELECT * FROM table WHERE name LIKE "%[search term]%")
