@@ -13,16 +13,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-def dateToString(date):
-    return date.strftime("%m/%d/%Y, %I:%M:%S %p")
-
-
-# id, name, deployment, created, updated
-# 0     1        2          3       4
-def resultToJSON(result):
-    pass
-
-
 def dbOpenConn():
     return sql.MySQLConnection(
         user=getenv('USERNAME'),
@@ -46,16 +36,16 @@ def deploy():
 def getall():
     db = dbOpenConn()
     query = "SELECT * FROM items"
-    cursor = db.cursor()
+    cursor = db.cursor(dictionary=True)
 
     cursor.execute(query)
 
-    response = resultToJSON(cursor.fetchall())
+    response = cursor.fetchall()
 
     cursor.close()
     db.close()
 
-    return Response(response, mimetype="application/json")
+    return jsonify(response)
 
 
 @ app.route('/remove', methods=['POST'])
