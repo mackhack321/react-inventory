@@ -1,0 +1,49 @@
+Software stack:
+    React frontend -> Python (Flask) backend -> MySQL database
+
+Necessary database columns:
+    - ID number (primary key, ex: 0001)
+    - Item name (ex: "Dell monitor")
+    - Deployment (ex: "Downstairs server" or "Not deployed")
+    - Creation date (when the item was entered into the database)
+    - Last updated date (the last time any column was changed)
+
+Flask API endpoints:
+    - /create:
+        Description: create a new item in the database
+        Request: entries for each database column
+        Response: OK or error
+
+    - /deploy:
+        Description: update the deployment of an existing item
+        Request: item ID, new deployment status
+        Response: OK or error
+
+    - /getall:
+        Description: get entire database of items
+        Request: none
+        Response: entire database in .map-friendly JSON form
+
+    - /remove:
+        Description: remove item from database
+        Request: item ID
+        Response: OK or error
+
+    - /update:
+        Description: edits an item
+        Request: item ID, new entry data
+        Response: OK or error
+
+    - /search (maybe, would be really cool):
+        Description: searches for databse entries based off of a search term
+        Request: search term
+        Response: items that match (SELECT * FROM table WHERE name LIKE "%[search term]%")
+
+Frontend features:
+    - display database in table form
+    - new item form with barcode scanner input for ID
+    - change deployment status form
+    - edit form (for editing all fields except for ID and creation date which cannot be changed)
+    - delete button
+    - sort alphabetically, by ID, by creation date, by last updated date, etc.
+    - search bar????? would be really cool
