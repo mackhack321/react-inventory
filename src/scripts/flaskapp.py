@@ -30,24 +30,36 @@ def create():
     name = db.converter.escape(request.json["name"])
     deployment = db.converter.escape(request.json["deployment"])
 
-    query = f"INSERT INTO items (id, name, deployment, created, updated) VALUES (\"{id}\", \"{name}\", \"{deployment}\", NOW(), NOW())"
+    query = f"INSERT INTO items (id, name, deployment) VALUES (\"{id}\", \"{name}\", \"{deployment}\")"
     print(query)
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(query)
     db.commit()
 
-    response = cursor.fetchall()
-
     cursor.close()
     db.close()
 
-    return jsonify(response)
+    return Response(status=201)
 
 
 @ app.route('/deploy', methods=['POST'])
 def deploy():
-    pass
+    db = dbOpenConn()
+
+    id = db.converter.escape(request.json["id"])
+    deployment = db.converter.escape(request.json["deployment"])
+
+    query = f"UPDATE items SET deployment=\"{deployment}\" WHERE id=\"{id}\""
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(query)
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return Response(status=200)
 
 
 @ app.route('/getall', methods=['GET'])
