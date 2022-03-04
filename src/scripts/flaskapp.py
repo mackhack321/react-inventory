@@ -5,7 +5,6 @@ from flask_cors import CORS
 import mysql.connector as sql
 from dotenv import load_dotenv
 from os import getenv
-from datetime import datetime
 
 load_dotenv()
 
