@@ -4,7 +4,7 @@ export default function PowerBar() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && searchTerm != "") {
+    if (e.key === "Enter" && searchTerm !== "") {
       console.log("search " + searchTerm);
     }
   };
