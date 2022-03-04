@@ -5,6 +5,7 @@ from flask_cors import CORS
 import mysql.connector as sql
 from dotenv import load_dotenv
 from os import getenv
+from datetime import datetime
 
 load_dotenv()
 
@@ -21,17 +22,35 @@ def dbOpenConn():
     )
 
 
-@app.route("/create", methods=["POST"])
+@app.route("/create", methods=['POST'])
 def create():
-    pass
+    db = dbOpenConn()
+
+    id = db.converter.escape(request.json["id"])
+    name = db.converter.escape(request.json["name"])
+    deployment = db.converter.escape(request.json["deployment"])
+
+    query = f"INSERT INTO items (id, name, deployment, created, updated) VALUES (\"{id}\", \"{name}\", \"{deployment}\", NOW(), NOW())"
+    print(query)
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(query)
+    db.commit()
+
+    response = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(response)
 
 
-@app.route('/deploy', methods=['POST'])
+@ app.route('/deploy', methods=['POST'])
 def deploy():
     pass
 
 
-@app.route('/getall', methods=['GET'])
+@ app.route('/getall', methods=['GET'])
 def getall():
     db = dbOpenConn()
     query = "SELECT * FROM items"
@@ -47,17 +66,17 @@ def getall():
     return jsonify(response)
 
 
-@app.route('/remove', methods=['DELETE'])
+@ app.route('/remove', methods=['DELETE'])
 def remove():
     pass
 
 
-@app.route('/update', methods=['POST'])
+@ app.route('/update', methods=['POST'])
 def update():
     pass
 
 
-@app.route('/search', methods=['GET'])
+@ app.route('/search', methods=['GET'])
 def search():
     searchterm = request.json["searchterm"]
 
