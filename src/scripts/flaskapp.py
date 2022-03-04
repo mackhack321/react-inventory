@@ -83,9 +83,23 @@ def remove():
     pass
 
 
-@ app.route('/update', methods=['POST'])
+@ app.route('/setname', methods=['POST'])
 def update():
-    pass
+    db = dbOpenConn()
+
+    id = db.converter.escape(request.json["id"])
+    name = db.converter.escape(request.json["name"])
+
+    query = f"UPDATE items SET name=\"{name}\" WHERE id=\"{id}\""
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(query)
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return Response(status=200)
 
 
 @ app.route('/search', methods=['GET'])

@@ -29,9 +29,9 @@ Flask API endpoints:
         Request: item ID
         Response: OK or error
 
-    - /update POST:
-        Description: edits an item
-        Request: item ID, new entry data
+    - /setname POST:
+        Description: changes an item's name
+        Request: item ID, new name
         Response: OK or error
 
     - /search GET (maybe, would be really cool):
