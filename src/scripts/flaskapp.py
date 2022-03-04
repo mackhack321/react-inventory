@@ -26,11 +26,10 @@ def dbOpenConn():
 def create():
     db = dbOpenConn()
 
-    id = db.converter.escape(request.json["id"])
     name = db.converter.escape(request.json["name"])
     deployment = db.converter.escape(request.json["deployment"])
 
-    query = f"INSERT INTO items (id, name, deployment) VALUES (\"{id}\", \"{name}\", \"{deployment}\")"
+    query = f"INSERT INTO items (name, deployment) VALUES (\"{name}\", \"{deployment}\")"
     print(query)
     cursor = db.cursor(dictionary=True)
 
