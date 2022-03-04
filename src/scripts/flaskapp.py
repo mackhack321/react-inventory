@@ -90,10 +90,9 @@ def update():
 
 @ app.route('/search', methods=['GET'])
 def search():
-    searchterm = request.json["searchterm"]
-
     db = dbOpenConn()
-    query = f"SELECT * FROM items WHERE name LIKE \"%{db.converter.escape(searchterm)}%\""
+    searchterm = db.converter.escape(request.json["searchterm"])
+    query = f"SELECT * FROM items WHERE name LIKE \"%{searchterm}%\""
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(query)
