@@ -80,7 +80,20 @@ def getall():
 
 @ app.route('/remove', methods=['DELETE'])
 def remove():
-    pass
+    db = dbOpenConn()
+
+    id = db.converter.escape(request.json["id"])
+
+    query = f"DELETE FROM items WHERE id=\"{id}\""
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(query)
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return Response(status=200)
 
 
 @ app.route('/setname', methods=['POST'])
