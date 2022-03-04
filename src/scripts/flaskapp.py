@@ -47,7 +47,7 @@ def getall():
     return jsonify(response)
 
 
-@app.route('/remove', methods=['POST'])
+@app.route('/remove', methods=['DELETE'])
 def remove():
     pass
 
