@@ -9,6 +9,10 @@ export default function Table() {
     console.log("hello from id " + id);
   }
 
+  function handleDelete(id) {
+    deleteEntry(id);
+  }
+
   useEffect(() => {
     async function updateTable() {
       const entries = await getAllEntries();
@@ -17,7 +21,7 @@ export default function Table() {
     }
 
     updateTable();
-  }, []);
+  }, [handleDelete]);
 
   return (
     <div className="flex flex-col">
@@ -94,7 +98,7 @@ export default function Table() {
                           Edit
                         </button>
                         <button
-                          onClick={() => deleteEntry(entry.id)}
+                          onClick={() => handleDelete(entry.id)}
                           className="text-red-500 hover:text-red-700 font-bold px-3"
                         >
                           Delete
