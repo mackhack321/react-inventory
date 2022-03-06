@@ -24,7 +24,7 @@ export default function Table() {
   };
 
   const clearSearch = (e) => {
-    if (e.key == "Escape") {
+    if (e.key === "Escape") {
       e.target.value = "";
       handleSearchChange("");
     }
