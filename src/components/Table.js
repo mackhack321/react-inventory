@@ -1,15 +1,22 @@
+/*
+  TODO:
+  - move create item button to right
+  - edit functionality
+  - sort
+  - update table on delete
+*/
+
 import React, { useEffect, useState } from "react";
 import deleteEntry from "../util/DeleteEntry";
 import getAllEntries from "../util/GetAllEntries";
+import search from "../util/Search";
 
 export default function Table() {
   const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && searchTerm !== "") {
-      console.log("search " + searchTerm);
-    }
+  const handleSearchChange = async (searchTerm) => {
+    console.log("search " + searchTerm);
+    setData(await search(searchTerm));
   };
 
   function handleEdit(id) {
@@ -56,8 +63,7 @@ export default function Table() {
               id="search"
               placeholder="Enter a search term"
               className="border-2 rounded-md px-2"
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => handleKeyDown(e)}
+              onChange={(e) => handleSearchChange(e.target.value)}
             />
           </div>
           <div className="">
