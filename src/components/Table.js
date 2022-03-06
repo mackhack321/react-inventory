@@ -21,7 +21,7 @@ export default function Table() {
     }
 
     updateTable();
-  }, [handleDelete]);
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -84,10 +84,10 @@ export default function Table() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {entry.created}
+                      {new Date(entry.created).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {entry.updated}
+                      {new Date(entry.updated).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                       <div className="space-x-5">
