@@ -2,7 +2,6 @@
   TODO:
   - edit functionality
   - sort
-  - loading spinner
 */
 
 import React, { useEffect, useState } from "react";
