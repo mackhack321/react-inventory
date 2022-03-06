@@ -148,7 +148,7 @@ export default function Table() {
                         </button>
                         <button
                           onClick={() => handleDelete(entry.id)}
-                          className="text-red-500 hover:text-red-700 font-bold px-3"
+                          className="text-red-500 hover:text-red-700 font-bold"
                         >
                           Delete
                         </button>
