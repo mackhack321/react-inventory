@@ -2,6 +2,7 @@
   TODO:
   - edit functionality
   - sort
+  - get item by ID
 */
 
 import React, { useEffect, useState } from "react";
