@@ -113,11 +113,11 @@ def update():
     return Response(status=200)
 
 
-@ app.route('/search', methods=['GET'])
+@ app.route('/search', methods=['POST'])
 def search():
     db = dbOpenConn()
     searchterm = db.converter.escape(request.json["searchterm"])
-    query = f"SELECT * FROM items WHERE name LIKE \"%{searchterm}%\""
+    query = f"SELECT * FROM items WHERE name LIKE \"{searchterm}%\""
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(query)
