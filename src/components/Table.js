@@ -5,14 +5,17 @@
 */
 
 import React, { useEffect, useState } from "react";
+import createItem from "../util/CreateItem";
 import deleteEntry from "../util/DeleteEntry";
 import getAllEntries from "../util/GetAllEntries";
 import search from "../util/Search";
+import CreationDialog from "./CreationDialog";
 import LoadingGraphic from "./LoadingGraphic";
 
 export default function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showCreationDialog, setShowCreationDialog] = useState(false);
 
   const handleSearchChange = async (searchTerm) => {
     console.log("search " + searchTerm);
@@ -28,6 +31,14 @@ export default function Table() {
 
   function handleEdit(id) {
     console.log("hello from id " + id);
+  }
+
+  async function handleCreate(data) {
+    setLoading(true);
+    setShowCreationDialog(false);
+    await createItem(data);
+    setData(await getAllEntries());
+    setLoading(false);
   }
 
   async function handleDelete(id) {
@@ -56,7 +67,10 @@ export default function Table() {
         </div>
         <div className="flex flex-row space-x-3 p-3">
           <div className="flex w-full">
-            <button className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500">
+            <button
+              className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500"
+              onClick={() => setShowCreationDialog(true)}
+            >
               Create Item
             </button>
           </div>
@@ -88,6 +102,7 @@ export default function Table() {
         </div>
       </div>
       {/* Powerbar ends here */}
+      {showCreationDialog && <CreationDialog onSubmit={handleCreate} />}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           {loading ? (
