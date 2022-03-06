@@ -8,5 +8,5 @@ export default async function deleteEntry(id) {
     }),
   });
 
-  return await response.status;
+  return response.status;
 }
