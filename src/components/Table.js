@@ -1,8 +1,8 @@
 /*
   TODO:
-  - move create item button to right
   - edit functionality
   - sort
+  - loading spinner
 */
 
 import React, { useEffect, useState } from "react";
@@ -16,6 +16,13 @@ export default function Table() {
   const handleSearchChange = async (searchTerm) => {
     console.log("search " + searchTerm);
     setData(await search(searchTerm));
+  };
+
+  const clearSearch = (e) => {
+    if (e.key == "Escape") {
+      e.target.value = "";
+      handleSearchChange("");
+    }
   };
 
   function handleEdit(id) {
@@ -40,8 +47,16 @@ export default function Table() {
   return (
     <div className="flex flex-col">
       {/* Powerbar begins here */}
-      <div className="bg-white rounded-lg mb-5 min-w-full">
+      <div className="bg-white rounded-lg mb-5 sm:w-2/3 lg:w-1/3 self-center">
+        <div className="text-center text-2xl pt-3 text-black font-mono">
+          Mack's Inventory System
+        </div>
         <div className="flex flex-row space-x-3 p-3">
+          <div className="flex w-full">
+            <button className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500">
+              Create Item
+            </button>
+          </div>
           <div className="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,12 +79,8 @@ export default function Table() {
               placeholder="Enter a search term"
               className="border-2 rounded-md px-2"
               onChange={(e) => handleSearchChange(e.target.value)}
+              onKeyDown={(e) => clearSearch(e)}
             />
-          </div>
-          <div className="">
-            <button className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500">
-              Create Item
-            </button>
           </div>
         </div>
       </div>
@@ -133,7 +144,7 @@ export default function Table() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(entry.updated + "-0600").toLocaleString()}
+                      {new Date(entry.created + "-0600").toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(entry.updated + "-0600").toLocaleString()}
