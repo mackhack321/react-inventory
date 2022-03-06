@@ -31,12 +31,22 @@ export default function CreationDialog(props) {
             />
           </div>
         </div>
-        <button
-          className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500"
-          onClick={() => props.onSubmit({ name: name, deployment: deployment })}
-        >
-          Submit
-        </button>
+        <div className="space-x-3">
+          <button
+            className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500"
+            onClick={() =>
+              props.onSubmit({ name: name, deployment: deployment })
+            }
+          >
+            Submit
+          </button>
+          <button
+            className="bg-red-300 rounded-md px-3 h-full hover:bg-red-500"
+            onClick={() => props.onSubmit({})}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
