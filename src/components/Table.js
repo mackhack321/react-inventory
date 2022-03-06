@@ -19,7 +19,7 @@ export default function Table() {
   const [loading, setLoading] = useState(false);
   const [showCreationDialog, setShowCreationDialog] = useState(false);
   const [showDeployDialog, setShowDeployDialog] = useState(false);
-  const [deploymentID, setDeploymentID] = useState(null);
+  const [deploymentItem, setDeploymentItem] = useState({});
 
   const handleSearchChange = async (searchTerm) => {
     console.log("search " + searchTerm);
@@ -33,8 +33,8 @@ export default function Table() {
     }
   };
 
-  function deploymentHelper(id) {
-    setDeploymentID(id);
+  function deploymentHelper(id, name) {
+    setDeploymentItem({ id: id, name: name });
     setShowDeployDialog(true);
   }
 
@@ -124,7 +124,7 @@ export default function Table() {
       {/* Powerbar ends here */}
       {showCreationDialog && <CreationDialog onSubmit={handleCreate} />}
       {showDeployDialog && (
-        <DeploymentDialog onSubmit={handleDeploy} id={deploymentID} />
+        <DeploymentDialog onSubmit={handleDeploy} item={deploymentItem} />
       )}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -189,7 +189,11 @@ export default function Table() {
                           <div className="text-sm text-gray-900">
                             {entry.deployment}
                           </div>
-                          <button onClick={() => deploymentHelper(entry.id)}>
+                          <button
+                            onClick={() =>
+                              deploymentHelper(entry.id, entry.name)
+                            }
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-5 w-5 stroke-slate-600 hover:stroke-slate-800"
