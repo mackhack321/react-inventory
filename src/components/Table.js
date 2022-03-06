@@ -3,7 +3,6 @@
   - move create item button to right
   - edit functionality
   - sort
-  - update table on delete
 */
 
 import React, { useEffect, useState } from "react";
@@ -23,8 +22,9 @@ export default function Table() {
     console.log("hello from id " + id);
   }
 
-  function handleDelete(id) {
-    deleteEntry(id);
+  async function handleDelete(id) {
+    await deleteEntry(id);
+    setData(await getAllEntries());
   }
 
   useEffect(() => {
