@@ -1,6 +1,5 @@
 /*
   TODO:
-  - edit functionality
   - sort
   - get item by ID
 */
@@ -8,15 +7,19 @@
 import React, { useEffect, useState } from "react";
 import createItem from "../util/CreateItem";
 import deleteEntry from "../util/DeleteEntry";
+import deploy from "../util/Deploy";
 import getAllEntries from "../util/GetAllEntries";
 import search from "../util/Search";
 import CreationDialog from "./CreationDialog";
+import DeploymentDialog from "./DeploymentDialog";
 import LoadingGraphic from "./LoadingGraphic";
 
 export default function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showCreationDialog, setShowCreationDialog] = useState(false);
+  const [showDeployDialog, setShowDeployDialog] = useState(false);
+  const [deploymentID, setDeploymentID] = useState(null);
 
   const handleSearchChange = async (searchTerm) => {
     console.log("search " + searchTerm);
@@ -30,8 +33,20 @@ export default function Table() {
     }
   };
 
-  function handleEdit(id) {
-    console.log("hello from id " + id);
+  function deploymentHelper(id) {
+    setDeploymentID(id);
+    setShowDeployDialog(true);
+  }
+
+  async function handleDeploy(data) {
+    console.log(data);
+    if (Object.keys(data).length === 0) {
+      setShowDeployDialog(false);
+    } else {
+      setShowDeployDialog(false);
+      await deploy(data);
+      setData(await getAllEntries());
+    }
   }
 
   async function handleCreate(data) {
@@ -108,6 +123,9 @@ export default function Table() {
       </div>
       {/* Powerbar ends here */}
       {showCreationDialog && <CreationDialog onSubmit={handleCreate} />}
+      {showDeployDialog && (
+        <DeploymentDialog onSubmit={handleDeploy} id={deploymentID} />
+      )}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           {loading ? (
@@ -167,8 +185,26 @@ export default function Table() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {entry.deployment}
+                        <div className="flex space-x-3">
+                          <div className="text-sm text-gray-900">
+                            {entry.deployment}
+                          </div>
+                          <button onClick={() => deploymentHelper(entry.id)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5 stroke-slate-600 hover:stroke-slate-800"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
+                          </button>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -178,20 +214,12 @@ export default function Table() {
                         {new Date(entry.updated + "-0600").toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                        <div className="space-x-5">
-                          <button
-                            onClick={() => handleEdit(entry.id)}
-                            className="text-indigo-600 hover:text-indigo-900 font-bold"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDelete(entry.id)}
-                            className="text-red-500 hover:text-red-700 font-bold"
-                          >
-                            Delete
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => handleDelete(entry.id)}
+                          className="text-red-500 hover:text-red-700 font-bold"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
