@@ -1,7 +1,6 @@
 /*
   TODO:
   - sort
-  - get item by ID
 */
 
 import React, { useEffect, useState } from "react";
@@ -113,7 +112,7 @@ export default function Table() {
               type="text"
               name="search"
               id="search"
-              placeholder="Enter a search term"
+              placeholder="Enter a name or ID"
               className="border-2 rounded-md px-2"
               onChange={(e) => handleSearchChange(e.target.value)}
               onKeyDown={(e) => clearSearch(e)}
