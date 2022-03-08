@@ -12,7 +12,7 @@ export default function CreationDialog(props) {
 
   return (
     <div className="bg-white rounded-lg mb-5 sm:w-2/3 lg:w-1/3 self-center">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} autoComplete="off">
         <div className="p-3 space-y-3">
           <div>
             <div>Name</div>
