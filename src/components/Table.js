@@ -1,7 +1,6 @@
 /*
   TODO:
   - better colors
-  - custom icon
 */
 
 import React, { useEffect, useState } from "react";
