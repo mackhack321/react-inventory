@@ -32,8 +32,8 @@ export default function Table() {
     }
   };
 
-  function deploymentHelper(id, name) {
-    setDeploymentItem({ id: id, name: name });
+  function deploymentHelper(id, name, currDeployment) {
+    setDeploymentItem({ id: id, name: name, currDeployment: currDeployment });
     setShowDeployDialog(true);
   }
 
@@ -186,7 +186,11 @@ export default function Table() {
                           </div>
                           <button
                             onClick={() =>
-                              deploymentHelper(entry.id, entry.name)
+                              deploymentHelper(
+                                entry.id,
+                                entry.name,
+                                entry.deployment
+                              )
                             }
                           >
                             <svg

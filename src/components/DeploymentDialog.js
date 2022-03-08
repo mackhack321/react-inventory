@@ -14,7 +14,10 @@ export default function DeploymentDialog(props) {
       <form onSubmit={onSubmit}>
         <div className="p-3 space-y-3">
           <div>
-            <div>New deployment for "{props.item.name}"</div>
+            <div>
+              New deployment for "{props.item.name}" (currently "
+              {props.item.currDeployment}")
+            </div>
             <div className="flex flex-col">
               <input
                 type="text"
