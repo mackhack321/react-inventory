@@ -43,7 +43,6 @@ export default function CreationDialog(props) {
           <div className="space-x-3">
             <button
               className="bg-green-300 rounded-md px-3 h-full hover:bg-green-500"
-              // onClick={() => submit()}
               type="submit"
             >
               Submit
