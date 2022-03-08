@@ -52,19 +52,15 @@ export default function Table() {
     if (Object.keys(data).length === 0) {
       setShowCreationDialog(false);
     } else {
-      setLoading(true);
       setShowCreationDialog(false);
       await createItem(data);
       setData(await getAllEntries());
-      setLoading(false);
     }
   }
 
   async function handleDelete(id) {
-    setLoading(true);
     await deleteEntry(id);
     setData(await getAllEntries());
-    setLoading(false);
   }
 
   useEffect(() => {
