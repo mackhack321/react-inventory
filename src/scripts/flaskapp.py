@@ -94,47 +94,16 @@ def remove():
     return Response(status=200)
 
 
-@ app.route('/setname', methods=['POST'])
-def update():
-    db = dbOpenConn()
-
-    id = db.converter.escape(request.json["id"])
-    name = db.converter.escape(request.json["name"])
-
-    query = f"UPDATE items SET name=\"{name}\" WHERE id=\"{id}\""
-    cursor = db.cursor(dictionary=True)
-
-    cursor.execute(query)
-    db.commit()
-
-    cursor.close()
-    db.close()
-
-    return Response(status=200)
-
-
 @ app.route('/search', methods=['POST'])
 def search():
     db = dbOpenConn()
     searchterm = db.converter.escape(request.json["searchterm"])
-    query = f"SELECT * FROM items WHERE name LIKE \"{searchterm}%\""
-    cursor = db.cursor(dictionary=True)
 
-    cursor.execute(query)
+    if not searchterm.isnumeric():
+        query = f"SELECT * FROM items WHERE name LIKE \"{searchterm}%\""
+    else:
+        query = f"SELECT * FROM items WHERE id LIKE \"{searchterm}%\""
 
-    response = cursor.fetchall()
-
-    cursor.close()
-    db.close()
-
-    return jsonify(response)
-
-
-@ app.route('/getbyid', methods=['POST'])
-def getByID():
-    db = dbOpenConn()
-    searchterm = db.converter.escape(request.json["searchterm"])
-    query = f"SELECT * FROM items WHERE id LIKE \"{searchterm}%\""
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(query)
