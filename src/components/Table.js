@@ -192,6 +192,7 @@ export default function Table() {
                                 entry.deployment
                               )
                             }
+                            aria-label="Change Deployment"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
