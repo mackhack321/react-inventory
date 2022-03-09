@@ -50,6 +50,7 @@ export default function CreationDialog(props) {
             <button
               className="bg-red-300 rounded-md px-3 h-full hover:bg-red-500"
               onClick={() => props.sendData({})}
+              type="button"
             >
               Cancel
             </button>
