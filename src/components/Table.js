@@ -11,11 +11,9 @@ import getAllEntries from "../util/GetAllEntries";
 import search from "../util/Search";
 import CreationDialog from "./CreationDialog";
 import DeploymentDialog from "./DeploymentDialog";
-import LoadingGraphic from "./LoadingGraphic";
 
 export default function Table() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [showCreationDialog, setShowCreationDialog] = useState(false);
   const [showDeployDialog, setShowDeployDialog] = useState(false);
   const [deploymentItem, setDeploymentItem] = useState({});
@@ -123,114 +121,108 @@ export default function Table() {
       )}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          {loading ? (
-            <LoadingGraphic />
-          ) : (
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      ID
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      <div>Name</div>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Deployment Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Created
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Last Updated
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      {data.length} Items
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {data.map((entry) => (
-                    <tr key={entry.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {entry.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ID
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    <div>Name</div>
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Deployment Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Created
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Last Updated
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    {data.length} Items
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.map((entry) => (
+                  <tr key={entry.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {entry.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{entry.name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex space-x-3">
                         <div className="text-sm text-gray-900">
-                          {entry.name}
+                          {entry.deployment}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex space-x-3">
-                          <div className="text-sm text-gray-900">
-                            {entry.deployment}
-                          </div>
-                          <button
-                            onClick={() =>
-                              deploymentHelper(
-                                entry.id,
-                                entry.name,
-                                entry.deployment
-                              )
-                            }
-                            aria-label="Change Deployment"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-5 w-5 stroke-slate-600 hover:stroke-slate-800"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(entry.created + "-0600").toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(entry.updated + "-0600").toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                         <button
-                          onClick={() => handleDelete(entry.id)}
-                          className="text-red-500 hover:text-red-700 font-bold"
+                          onClick={() =>
+                            deploymentHelper(
+                              entry.id,
+                              entry.name,
+                              entry.deployment
+                            )
+                          }
+                          aria-label="Change Deployment"
                         >
-                          Delete
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 stroke-slate-600 hover:stroke-slate-800"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
+                          </svg>
                         </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {new Date(entry.created + "-0600").toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {new Date(entry.updated + "-0600").toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                      <button
+                        onClick={() => handleDelete(entry.id)}
+                        className="text-red-500 hover:text-red-700 font-bold"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
